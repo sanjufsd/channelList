@@ -1,0 +1,21 @@
+<% if listing.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <ul>
+    <% listing.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for [show, listing] do |f| %>
+  <strong><%= f.label :watchlist %></strong>
+  <%= f.collection_select :watchlist_id, alphebetize(current_user.watchlists), :id, :name %><br>
+  <strong><%= f.label :user_status %></strong>
+  <%= f.text_field :user_status, class:"form-control" %><br>
+  <strong><%= f.label :user_season %></strong>
+  <%= f.number_field :user_season, class:"form-control" %><br>
+  <%= f.check_box :fav %> <strong>Fav?</strong> <br>
+  <%= f.hidden_field :user_id, value: current_user.id %><br>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

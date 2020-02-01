@@ -1,0 +1,17 @@
+<% if watchlist.errors.any? %>
+<div class="alert alert-danger" role="alert">
+  <ul>
+      <% watchlist.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+  </ul>
+</div>
+<% end %>
+
+<%= form_for [user, watchlist] do |f| %>
+  <strong><%= f.label :name %></strong>
+  <%= f.text_field :name, class:"form-control" %><br>
+  <strong><%= f.label :description %></strong>
+  <%= f.text_area :description, class:"form-control" %><br>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

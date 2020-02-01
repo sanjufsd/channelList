@@ -1,0 +1,14 @@
+<% listings.each do |listing| %>
+  <div class="card card-sm mb-3">
+    <h5 class="card-header"><%= link_to listing.watchlist.name, user_watchlist_path(current_user, listing.watchlist) %></h5>
+    <div class="card-body">
+      <p><strong>Your Status</strong>:<br>
+        <%= listing.user_status %><br>
+      <strong>Your Season</strong>: <%= listing.user_season %></p>
+      <%= button_to "Edit Watchlist Details", edit_show_listing_path(show, listing), :method => "get", class: "btn btn-warning btn-sm btn-block" %>
+      <%= form_for listing, method: :delete do |f| %>
+        <%= f.submit "Remove From Watchlist", class:"btn btn-sm btn-danger btn-block" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

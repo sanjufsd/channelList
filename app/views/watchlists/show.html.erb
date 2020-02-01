@@ -1,0 +1,36 @@
+<% content_for :header do %>
+  <h1><%= @watchlist.name %></h1>
+  <p><em><%= @watchlist.description %></em></p>
+<% end %>
+
+<% content_for :vertical_nav do %>
+  <ul class="nav flex-column">
+    <li class="nav-item mb-3">
+      <%= button_to "Edit this Watchlist", edit_user_watchlist_path(current_user, @watchlist), :method => "get", class: "btn btn-warning btn-block" %>
+    </li>
+    <li class="nav-item mb-3">
+      <%= button_to "Back to All Watchlists", user_watchlists_path(current_user), :method => "get", class: "btn btn-info btn-block" %>
+    </li>
+    <li class="nav-item">
+      <%= button_to "Add Shows", shows_path, :method => "get", class: "btn btn-info btn-block" %>
+    </li>
+  </ul>
+<% end %>
+
+<% content_for :content do %>
+  <% @shows.each do |show| %>
+      <div class="card mb-3">
+        <h5 class="card-header"><%= link_to show.title, show_path(show) %></h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Channel: <%= show.channel.name %></li>
+          <li class="list-group-item">Season: <%= show.current_season %></li>
+        </ul>
+      </div>
+  <% end %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= form_tag(watchlist_path, method: "delete") do %>
+    <%= submit_tag("Delete Watchlist", class: "btn btn-danger btn-block") %>
+  <% end %>
+<% end %>

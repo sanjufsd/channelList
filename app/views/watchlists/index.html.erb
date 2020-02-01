@@ -1,0 +1,43 @@
+<% content_for :header do %>
+  <h1><%= current_user.username %>'s Watchlists</h1>
+<% end %>
+
+<% content_for :vertical_nav do %>
+  <ul class="nav flex-column">
+    <li class="nav-item mb-3">
+      <%= button_to "Create a new Watchlist", new_user_watchlist_path(current_user), :method => "get", class: "btn btn-info btn-block" %>
+    </li>
+    <li class="nav-item mb-3">
+      <%= button_to "Add a Show", shows_path, :method => "get", class: "btn btn-info btn-block" %>
+    </li>
+    <li class="nav-item">
+      <%= form_tag(user_shows_behind_path(current_user), method: "get") do %>
+        <%= submit_tag("Shows I'm Behind On", class: "btn btn-warning btn-block") %>
+      <% end %>
+    </li>
+  </ul>
+<% end %>
+
+
+<% content_for :content do %>
+  <% if @watchlists.count == 0 %>
+    <p><center>You don't have any watchlists! <%= link_to "Create One", new_user_watchlist_path(current_user) %> to start adding shows!</center></p>
+  <% else %>
+    <% alphebetize(@watchlists).each do |watchlist| %>
+      <div class="card border-info mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to watchlist.name, user_watchlist_path(current_user, watchlist) %></h5>
+          <p class="card-text"><%= watchlist.description %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <p>Favorite Shows</p>
+  <% @favorites.each do |show| %>
+    <p> <%= link_to show.title, show_path(show) %></p>
+  <% end %>
+  <%= button_to "See All of My Shows", user_shows_path(current_user), :method => "get", class: "btn btn-info" %>
+<% end %>
